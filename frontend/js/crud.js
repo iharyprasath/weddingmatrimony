@@ -7,10 +7,16 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
+function apiUrl(path) {
+  const baseUrl = window.API_BASE_URL || "";
+  return `${baseUrl}${path}`;
+}
+
 function imageUrl(value) {
   if (!value) return "";
+  if (value.startsWith("/uploads/")) return apiUrl(value);
   if (/^(https?:)?\/\//.test(value) || value.startsWith("/")) return value;
-  return `/uploads/${value}`;
+  return apiUrl(`/uploads/${value}`);
 }
 
 function firstValue() {
@@ -24,7 +30,7 @@ function firstValue() {
 
 async function loadHomepageData() {
   try {
-    const response = await fetch("/heroes");
+    const response = await fetch(apiUrl("/heroes"));
     
 
     if (!response.ok) {
@@ -65,7 +71,7 @@ async function loadHomepageData() {
 
 async function loadServices() {
   try {
-    const response = await fetch("/services");
+    const response = await fetch(apiUrl("/services"));
 
     if (!response.ok) {
       throw new Error("Unable to load services data");
@@ -81,7 +87,7 @@ async function loadServices() {
 
 async function loadAboutSection() {
   try {
-    const response = await fetch("/about-section");
+    const response = await fetch(apiUrl("/about-section"));
 
     if (!response.ok) {
       throw new Error("Unable to load about section data");
@@ -98,7 +104,7 @@ async function loadAboutSection() {
 
 async function loadBlogs() {
   try {
-    const response = await fetch("/blogs");
+    const response = await fetch(apiUrl("/blogs"));
 
     if (!response.ok) {
       throw new Error("Unable to load blog data");
@@ -270,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 async function loadtrusted() {
   try {
-    const trustresponse = await fetch("/trusted");
+    const trustresponse = await fetch(apiUrl("/trusted"));
 
     if (!trustresponse.ok) {
       throw new Error("Unable to load trusted brand data");
