@@ -13,6 +13,22 @@ if (!databaseUrl && missingEnv.length > 0) {
   throw new Error(`Missing required database env vars: ${missingEnv.join(", ")}`);
 }
 
+function logDatabaseConfig() {
+  if (databaseUrl) {
+    const parsedUrl = new URL(databaseUrl);
+    console.log(
+      `Database config: MYSQL_PUBLIC_URL user=${parsedUrl.username} host=${parsedUrl.hostname} port=${parsedUrl.port} database=${parsedUrl.pathname.slice(1)}`,
+    );
+    return;
+  }
+
+  console.log(
+    `Database config: DB env vars user=${process.env.DB_USER} host=${process.env.DB_HOST} port=${process.env.DB_PORT} database=${process.env.DB_NAME}`,
+  );
+}
+
+logDatabaseConfig();
+
 const sequelize = databaseUrl
   ? new Sequelize(databaseUrl, {
       dialect: "mysql",
