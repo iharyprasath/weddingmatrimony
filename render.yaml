@@ -11,7 +11,7 @@ services:
       - key: DB_HOST
         sync: false
       - key: DB_USER
-        value: root
+        sync: false
       - key: DB_PASSWORD
         sync: false
       - key: DB_NAME
