@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Hero View</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    .hero-list {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #8eb7e6;
+    }
+
+    img {
+      width: 120px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .btn-edit {
+      background: #007bff;
+      margin-right: 5px;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+    }
+
+    .btn-edit:hover {
+      background: #0056b3;
+    }
+
+    .btn-delete:hover {
+      background: #a71d2a;
+    }
+
+    .add-btn {
+      display: inline-block;
+      padding: 12px 18px;
+      background: aqua;
+      color: black;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .viewhero{
+      display: inline-block;
+      padding: 12px 18px;
+      background: rgb(107, 231, 153);
+      color: black;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    #message {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    /* MODAL */
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      width: 500px;
+      max-width: 90%;
+      padding: 25px;
+      border-radius: 10px;
+      position: relative;
+      animation: popup 0.3s ease;
+    }
+
+    @keyframes popup {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #ff0606;
+    }
+
+    .close-btn:hover {
+      color: red;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    .update-btn {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .update-btn:hover {
+      background: #0056b3;
+    }
+  </style>
+  <link rel="stylesheet" href="../css/admin-view.css">
+</head>
+
+<body>
+
+  <div class="hero-list">
+
+    <a class="add-btn" href="../admin.html">
+      Add New Hero
+    </a>
+
+     <a class="viewhero" href="/index.html#hero">
+      view hero section
+    </a>
+
+    <h2>Hero Section Data</h2>
+
+    <p id="message"></p>
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Subtitle</th>
+          <th>Description</th>
+          <th>Image</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody id="heroBody">
+        <tr>
+          <td colspan="6">Loading...</td>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <!-- MODAL -->
+
+  <div class="modal" id="editModal">
+
+    <div class="modal-content">
+
+      <span class="close-btn" onclick="closeModal()">
+        &times;
+      </span>
+
+      <h2>Edit Hero</h2>
+
+      <form id="heroEditForm" enctype="multipart/form-data">
+
+        <div class="form-group">
+
+          <label>Title</label>
+
+          <input
+            type="text"
+            id="title"
+            name="title"
+            required
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Subtitle</label>
+
+          <input
+            type="text"
+            id="subtitle"
+            name="subtitle"
+            required
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Description</label>
+
+          <textarea
+            id="description"
+            name="description"
+            required
+          ></textarea>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Current Image</label>
+
+          <div id="currentImage">
+            No image uploaded
+          </div>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Change Banner Image</label>
+
+          <input
+            type="file"
+            id="banner_image"
+            name="banner_image"
+            accept="image/*"
+          >
+
+        </div>
+
+        <button type="submit" class="update-btn">
+          Update Hero
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    const heroBody = document.getElementById("heroBody");
+
+    const message = document.getElementById("message");
+
+    const editModal =
+      document.getElementById("editModal");
+
+    const heroForm =
+      document.getElementById("heroEditForm");
+
+    let currentHeroId = null;
+
+    function imageview(src, title) {
+
+      if (!src) {
+        return "No Image";
+      }
+
+      return `
+        <img src="${src}" alt="${title}">
+      `;
+    }
+
+    async function loadHeroes() {
+
+      heroBody.innerHTML = `
+        <tr>
+          <td colspan="6">Loading...</td>
+        </tr>
+      `;
+
+      try {
+
+        const response = await fetch("/heroes");
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch heroes");
+        }
+
+        const heroes = await response.json();
+
+        heroBody.innerHTML = "";
+
+        if (!heroes || heroes.length === 0) {
+
+          heroBody.innerHTML = `
+            <tr>
+              <td colspan="6">No Heroes Found</td>
+            </tr>
+          `;
+
+          return;
+        }
+
+        heroes.forEach((hero) => {
+
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+            <td>${hero.id}</td>
+
+            <td>${hero.title || ""}</td>
+
+            <td>${hero.subtitle || ""}</td>
+
+            <td>${hero.description || ""}</td>
+
+            <td>
+              ${imageview(hero.image, hero.title)}
+            </td>
+
+            <td>
+
+              <button 
+                class="btn-edit"
+                onclick="editHero(${hero.id})"
+              >
+                Edit
+              </button>
+
+              <button 
+                class="btn-delete"
+                onclick="deleteHero(${hero.id})"
+              >
+                Delete
+              </button>
+
+            </td>
+          `;
+
+          heroBody.appendChild(row);
+
+        });
+
+      } catch (error) {
+
+        console.error(error);
+
+        heroBody.innerHTML = `
+          <tr>
+            <td colspan="6">
+              Error Loading Heroes
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    async function editHero(id) {
+
+      currentHeroId = id;
+
+      editModal.style.display = "flex";
+
+      try {
+
+        const response =
+          await fetch(`/heroes/${id}`);
+
+        if (!response.ok) {
+          throw new Error("Hero not found");
+        }
+
+        const hero = await response.json();
+
+        document.getElementById("title").value =
+          hero.title || "";
+
+        document.getElementById("subtitle").value =
+          hero.subtitle || "";
+
+        document.getElementById("description").value =
+          hero.description || "";
+
+        const currentImage =
+          document.getElementById("currentImage");
+
+        if (hero.image) {
+
+          currentImage.innerHTML = `
+            <img 
+              src="${hero.image}"
+              style="
+                width:200px;
+                height:120px;
+                border-radius:8px;
+              "
+            >
+          `;
+
+        } else {
+
+          currentImage.innerHTML =
+            "No image uploaded";
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          "Error loading hero details";
+      }
+    }
+
+    function closeModal() {
+
+      editModal.style.display = "none";
+    }
+
+    heroForm.addEventListener("submit", async (e) => {
+
+      e.preventDefault();
+
+      const formData = new FormData();
+
+      formData.append(
+        "title",
+        document.getElementById("title").value.trim()
+      );
+
+      formData.append(
+        "subtitle",
+        document.getElementById("subtitle").value.trim()
+      );
+
+      formData.append(
+        "description",
+        document.getElementById("description").value.trim()
+      );
+
+      const imageFile =
+        document.getElementById("banner_image").files[0];
+
+      if (imageFile) {
+
+        formData.append(
+          "banner_image",
+          imageFile
+        );
+      }
+
+      try {
+
+        const response = await fetch(
+          `/heroes/${currentHeroId}`,
+          {
+            method: "PUT",
+            body: formData
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+          message.textContent =
+            "Hero updated successfully";
+
+          closeModal();
+
+          loadHeroes();
+
+        } else {
+
+          message.textContent =
+            data.message || "Update failed";
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          "Error updating hero";
+      }
+
+    });
+
+    async function deleteHero(id) {
+
+      const confirmDelete = confirm(
+        "Are you sure you want to delete this hero?"
+      );
+
+      if (!confirmDelete) return;
+
+      try {
+
+        const response = await fetch(
+          `/heroes/${id}`,
+          {
+            method: "DELETE"
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+          message.textContent = data.message;
+
+          loadHeroes();
+
+        } else {
+
+          message.textContent =
+            data.message || "Delete failed";
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          "Error deleting hero";
+      }
+    }
+
+    window.onclick = function (e) {
+
+      if (e.target === editModal) {
+
+        closeModal();
+      }
+    };
+
+    loadHeroes();
+
+  </script>
+
+</body>
+
+</html>

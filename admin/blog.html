@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="css/admin.css">
+  <meta charset="UTF-8">
+  <title>Blog Admin</title>
+</head>
+
+<body>
+  <button class="admin-menu-toggle" type="button" aria-label="Toggle admin menu" aria-expanded="false"><span></span></button>
+  <div class="sidebar-overlay" aria-hidden="true"></div>
+  <div class="dashboard">
+
+ <aside class="sidebar">
+
+  <div class="sidebar-header">
+  <button class="sidebar-close">✕</button>
+</div>
+
+      <div class="logo">
+        <h2>Admin Panel</h2>
+      </div>
+
+      <ul class="menu">
+
+        <li>
+          <a href="admin.html">Hero </a>
+        </li>
+
+        <li>
+          <a href="service.html">Services</a>
+        </li>
+
+        <li>
+          <a href="trustedbrands.html">Trusted Brands</a>
+        </li>
+
+        <li class="active">
+          <a href="blog.html">Blog</a>
+        </li>
+
+        <li>
+          <a href="welcomesection.html">Welcome Section</a>
+        </li>
+<!-- 
+        <li>
+  <a href="/admin/adminview/blogview.html">back to view</a>
+</li> -->
+
+
+      </ul>
+
+    </aside>
+    <div class="main-content">
+      <div class="admin-container">
+        <h1>Blog Section Admin</h1>
+
+        <form id="blogForm" enctype="multipart/form-data">
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="title" placeholder="Blog title" required>
+          </div>
+
+          <div class="form-group">
+            <label>Category</label>
+            <input type="text" name="category" placeholder="Wedding" required>
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" placeholder="Short blog description" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" name="blogdate">
+          </div>
+
+          <div class="form-group">
+            <label>Button Text</label>
+            <input type="text" name="buttontext" placeholder="Read more" value="Read more">
+          </div>
+
+          <div class="form-group">
+            <label>Blog Image</label>
+            <input class="file-input" type="file" name="blog_image">
+          </div>
+
+          <button type="submit">Save Blog</button>
+          <div id="adminchange"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // const adminChangeDiv = document.getElementById("adminchange");
+    // adminChangeDiv.textContent = "Admin Dashboard - Add Blog Post";
+
+    const form = document.getElementById("blogForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const response = await fetch("/blogs", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Blog not saved");
+        return;
+      }
+
+      form.reset();
+      alert(data.message || "Blog Saved");
+      window.location.href = "/admin/adminview/blogview.html";
+    });
+  </script>
+  <script src="js/admin-menu.js"></script>
+</body>
+
+</html>

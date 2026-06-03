@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="css/admin.css">
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+</head>
+
+<body>
+<button class="admin-menu-toggle" type="button" aria-label="Toggle admin menu" aria-expanded="false"><span></span></button>
+<div class="sidebar-overlay" aria-hidden="true"></div>
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-header">
+  <button class="sidebar-close">✕</button>
+</div>
+
+      <div class="logo">
+        <h2>Admin Panel</h2>
+      </div>
+
+      <ul class="menu">
+
+        <li>
+          <a href="admin.html">Home Section</a>
+        </li>
+
+        <li  class="active">
+          <a href="service.html">Services</a>
+        </li>
+
+        <li>
+          <a href="trustedbrands.html">Trusted Brands</a>
+        </li>
+
+        <li>
+          <a href="blog.html">Blog</a>
+        </li>
+
+        <li>
+          <a href="welcomesection.html">Welcome Section</a>
+        </li>
+<!-- 
+        <li>
+  <a href="/admin/adminview/serviceview.html">back to view</a>
+</li> -->
+
+
+      </ul>
+
+    </aside>
+
+
+
+
+  <!-- RIGHT SIDE -->
+  <div class="main-content">
+
+    <div class="admin-container">
+
+      <h1>Service Section Admin</h1>
+
+      <form id="serviceForm"
+            enctype="multipart/form-data">
+
+        <div class="form-group">
+
+          <label>Title</label>
+
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            required
+          >
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label>Description</label>
+
+          <input
+            name="description"
+            placeholder="Description"
+            required
+          >
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label>Button Text</label>
+
+          <input
+            name="buttontext"
+            placeholder="Button Text"
+            required
+          >
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label>Service Image</label>
+
+          <input
+            class="file-input"
+            type="file"
+            name="service_image"
+          >
+
+        </div>
+
+
+
+        <button type="submit">
+
+          Save Service
+
+        </button>
+
+        <div id="adminchange"></div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+  <script>
+  // const adminChangeDiv = document.getElementById("adminchange");
+  // adminChangeDiv.textContent = "Admin Dashboard - Add Service Slide";
+
+  const form = document.getElementById("serviceForm");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    const response = await fetch("/services", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    console.log(data);
+
+    if (!response.ok) {
+      alert(data.message || "Service not saved");
+      return;
+    }
+
+    form.reset();
+
+    alert(data.message || "Service Saved");
+
+    window.location.href = "/admin/adminview/serviceview.html";
+  });
+</script>
+
+<script src="js/admin-menu.js"></script>
+</body>
+
+</html>

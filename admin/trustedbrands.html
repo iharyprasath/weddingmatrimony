@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="css/admin.css">
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+</head>
+
+<body>
+<button class="admin-menu-toggle" type="button" aria-label="Toggle admin menu" aria-expanded="false"><span></span></button>
+<div class="sidebar-overlay" aria-hidden="true"></div>
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-header">
+  <button class="sidebar-close">✕</button>
+</div>
+
+      <div class="logo">
+        <h2>Admin Panel</h2>
+      </div>
+
+      <ul class="menu">
+
+        <li >
+          <a href="admin.html">Hero </a>
+        </li>
+
+        <li>
+          <a href="service.html">Services</a>
+        </li>
+
+        <li class="active">
+          <a href="trustedbrands.html">Trusted Brands</a>
+        </li>
+
+        <li>
+          <a href="blog.html">Blog</a>
+        </li>
+
+        <li>
+          <a href="welcomesection.html">Welcome Section</a>
+        </li>
+<!-- 
+        <li>
+  <a href="/admin/adminview/trustedview.html"> back to view</a>
+</li> -->
+
+
+      </ul>
+
+    </aside>
+
+
+  <!-- RIGHT SIDE -->
+  <div class="main-content">
+
+    <div class="admin-container">
+
+      <h1>Trusted Brands </h1>
+
+      <form id="trustedForm"
+            enctype="multipart/form-data">
+
+        <div class="form-group">
+
+          <label>city</label>
+
+          <input
+            type="text"
+            name="city"
+            placeholder="City"
+            required
+          >
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label>username</label>
+
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            required
+          >
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label>Description</label>
+
+          <textarea
+            name="description"
+            placeholder="Description"
+            required
+          ></textarea>
+
+        </div>
+
+
+
+        <div class="form-group">
+
+          <label>trustedImage</label>
+
+          <input
+            class="file-input"
+            type="file"
+            name="trustedimage"
+          >
+
+        </div>
+
+
+
+        <button type="submit">
+
+          Save Trusted Brand
+
+        </button>
+
+        <div id="adminchange"></div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+  <script>
+    const form = document.getElementById("trustedForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch("/trusted", {
+          method : "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Unable to save trusted brand");
+        }
+
+        form.reset();
+
+        alert(data.message || "Trusted Brand Saved");
+
+        window.location.href = "/admin/adminview/trustedview.html";
+      } catch (error) {
+        document.getElementById("adminchange").textContent = error.message;
+      }
+
+    });
+
+  </script>
+
+<script src="js/admin-menu.js"></script>
+</body>
+
+</html>

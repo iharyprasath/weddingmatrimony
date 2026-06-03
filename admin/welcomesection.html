@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="css/admin.css">
+  <meta charset="UTF-8">
+  <title>Welcome Section Admin</title>
+</head>
+
+<body>
+  <button class="admin-menu-toggle" type="button" aria-label="Toggle admin menu" aria-expanded="false"><span></span></button>
+  <div class="sidebar-overlay" aria-hidden="true"></div>
+  <div class="dashboard">
+    <aside class="sidebar">
+
+      <div class="sidebar-header">
+  <button class="sidebar-close">✕</button>
+</div>
+
+      <div class="logo">
+        <h2>Admin Panel</h2>
+      </div>
+
+      <ul class="menu">
+
+        <li >
+          <a href="admin.html">Home Section</a>
+        </li>
+
+        <li>
+          <a href="service.html">Services</a>
+        </li>
+
+        <li>
+          <a href="trustedbrands.html">Trusted Brands</a>
+        </li>
+
+        <li>
+          <a href="blog.html">Blog</a>
+        </li>
+
+        <li class="active">
+          <a href="welcomesection.html">Welcome Section</a>
+        </li>
+<!-- <li>
+  <a href="/admin/adminview/welcomeview.html">back to view</a>
+</li> -->
+
+
+      </ul>
+
+    </aside>
+
+
+    <div class="main-content">
+      <div class="admin-container">
+        <h1>Welcome Section Admin</h1>
+
+        <form id="aboutForm" enctype="multipart/form-data">
+          <div class="form-group">
+            <label>Heading</label>
+            <input type="text" name="heading" placeholder="Welcome to" required>
+          </div>
+
+          <div class="form-group">
+            <label>Highlighted Text</label>
+            <input type="text" name="highlight" placeholder="Wedding Matrimony">
+          </div>
+
+          <div class="form-group">
+            <label>First Description</label>
+            <textarea name="description_one" placeholder="Main welcome paragraph"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>CTA Text</label>
+            <input type="text" name="cta_text" placeholder="Click here to">
+          </div>
+
+          <div class="form-group">
+            <label>CTA Link</label>
+            <input type="text" name="cta_href" placeholder="#register" value="#register">
+          </div>
+
+          <div class="form-group">
+            <label>CTA Paragraph Text</label>
+            <textarea name="description_two" placeholder="start your matrimony service now."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Note</label>
+            <textarea name="note" placeholder="Create your profile, shortlist matches..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Phone Label</label>
+            <input type="text" name="phone_label" placeholder="Enquiry">
+          </div>
+
+          <div class="form-group">
+           <label>Phone Value</label>
+
+  <input
+    type="tel"
+    name="phone_value"
+    placeholder="9876543210"
+    pattern="[0-9]{10}"
+    maxlength="10"
+    required
+  >
+          </div>
+
+          <div class="form-group">
+            <label>Support Label</label>
+            <input type="text" name="support_label" placeholder="Get Support">
+          </div>
+
+          <div class="form-group">
+            <label>Support Value</label>
+            <input type="email" name="support_value" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" placeholder="info@example.com">
+          </div>
+
+          <div class="form-group">
+            <label>First Image</label>
+            <input class="file-input" type="file" name="image_one">
+          </div>
+
+          <div class="form-group">
+            <label>Second Image</label>
+            <input class="file-input" type="file" name="image_two">
+          </div>
+
+          <button type="submit">Save Welcome Section</button>
+          <div id="adminchange"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // const adminChangeDiv = document.getElementById("adminchange");
+    // adminChangeDiv.textContent = "Admin Dashboard - Edit Welcome Section";
+
+    const form = document.getElementById("aboutForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const response = await fetch("/about-section", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Welcome section not saved");
+        return;
+      }
+
+      form.reset();
+      alert(data.message || "Welcome Section Saved");
+      window.location.href = "/admin/adminview/welcomeview.html";
+    });
+  </script>
+  <script src="js/admin-menu.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+[
+  {
+    "title": "Browse Profiles",
+    "description": "1200+ verified profiles",
+    "image": "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=700&q=82",
+    "url": "#profiles",
+    "buttonText": "View more"
+  },
+  {
+    "title": "Wedding",
+    "description": "Recent success stories",
+    "image": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=700&q=82",
+    "url": "#couples",
+    "buttonText": "View more"
+  },
+  {
+    "title": "Advisor Help",
+    "description": "Personal match support",
+    "image": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=700&q=82",
+    "url": "#contact",
+    "buttonText": "Ask now"
+  },
+  {
+    "title": "Join Now",
+    "description": "Start your profile for free",
+    "image": "https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=700&q=82",
+    "url": "#register",
+    "buttonText": "Get started"
+  },
+  {
+    "title": "Photo Gallery",
+    "description": "Wedding moments and memories",
+    "image": "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=700&q=82",
+    "url": "#gallery",
+    "buttonText": "View more"
+  },
+  
+  {
+    "title": "Blog & Articles",
+    "description": "Helpful guides for families",
+    "image": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=700&q=82",
+    "url": "#blog",
+    "buttonText": "Read more"
+  }
+]
+
+
+            // <li class="swiper-slide"><article class="cus-revi-box"><div class="revi-im"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&q=80" alt=""></div><p>The profile verification and advisor calls helped our families move with confidence.</p><h5>Jack Daniel</h5><span>New York</span></article></li>
+            // <li class="swiper-slide"><article class="cus-revi-box"><div class="revi-im"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=240&q=80" alt=""></div><p>Simple search, respectful conversations, and a thoughtful team behind everything.</p><h5>Priya Raman</h5><span>Chennai</span></article></li>
